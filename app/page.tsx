@@ -37,7 +37,7 @@ const audiences = [
   'Inmobiliarias o estudios',
 ];
 
-const team = ['Arq. Ignacio Casas', 'Ing. Federico Fada', 'MMO Rodrigo Orellano'];
+const team = ['Arq. Ignacio Casas', 'Ing. Federico Fada Py', 'MMO. Rodrigo Orellano'];
 
 const trustPoints = [
   'Informe claro',
@@ -60,9 +60,6 @@ export default function HomePage() {
       <section className="border-b border-slate-200 bg-gradient-to-b from-slate-50 to-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-6 md:px-8 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
           <div>
-            <div className="mb-4 inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium tracking-wide text-slate-600 shadow-sm">
-              Córdoba Capital y zonas aledañas
-            </div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
               Base Cero Inspecciones
             </p>
@@ -102,7 +99,7 @@ export default function HomePage() {
                 <p className="mt-1 text-sm text-slate-600">Formulario de solicitud de inspecciones</p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <p className="text-sm font-semibold text-slate-900">WhatsApp secundario</p>
+                <p className="text-sm font-semibold text-slate-900">WhatsApp</p>
                 <p className="mt-1 text-sm text-slate-600">+54 351 2647360</p>
               </div>
             </div>
