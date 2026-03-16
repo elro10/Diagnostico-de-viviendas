@@ -54,9 +54,97 @@ const frequentCases = [
 
 const propertyTypes = ['Casas', 'Departamentos', 'Dúplex'];
 
+const faqItems = [
+  {
+    question: '¿Cuándo conviene hacer una inspección de vivienda?',
+    answer:
+      'Conviene realizarla antes de comprar o alquilar una propiedad, y también al cierre de un contrato o antes de vender. Una inspección ayuda a detectar problemas ocultos que podrían generar gastos, reclamos o decisiones equivocadas.',
+  },
+  {
+    question: '¿Qué incluye una inspección preventiva de vivienda?',
+    answer:
+      'Incluye la revisión técnica visible y funcional del inmueble, con evaluación de humedad, desniveles, instalaciones eléctricas básicas, posibles pérdidas o fugas, estado general de muros, cielorrasos, pisos, aberturas y observaciones constructivas.',
+  },
+  {
+    question: '¿La inspección sirve para casas, departamentos y dúplex?',
+    answer:
+      'Sí. El servicio está pensado para casas, departamentos y dúplex, tanto en operaciones de compra y alquiler como en entregas, recepciones o revisiones preventivas.',
+  },
+  {
+    question: '¿Qué recibe el cliente después de la visita?',
+    answer:
+      'El cliente recibe un informe en PDF con registro fotográfico, hallazgos por ambiente, observaciones prioritarias y una conclusión general sobre el estado del inmueble.',
+  },
+  {
+    question: '¿En qué zonas realizan las inspecciones?',
+    answer:
+      'Realizamos inspecciones en Córdoba Capital y zonas aledañas, según disponibilidad y tipo de inmueble.',
+  },
+];
+
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Base Cero Inspecciones',
+  alternateName: 'Base Cero Inspecciones de Viviendas',
+  description:
+    'Inspección preventiva de viviendas en Córdoba Capital y zonas aledañas. Diagnóstico técnico profesional con herramientas de inspección avanzada.',
+  url: 'https://inspeccionesdeviviendas.com.ar',
+  telephone: '+54 351 2647360',
+  email: 'contacto@inspeccionesdeviviendas.com.ar',
+  areaServed: {
+    '@type': 'City',
+    name: 'Córdoba',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Córdoba Capital',
+    addressRegion: 'Córdoba',
+    addressCountry: 'AR',
+  },
+  serviceType: [
+    'Inspección de viviendas',
+    'Inspección preventiva de viviendas',
+    'Detección de humedad',
+    'Revisión técnica antes de comprar una vivienda',
+    'Diagnóstico técnico de viviendas',
+  ],
+  foundingLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Córdoba Capital',
+      addressRegion: 'Córdoba',
+      addressCountry: 'AR',
+    },
+  },
+};
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white text-slate-800">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
       <section className="border-b border-slate-200 bg-gradient-to-b from-slate-50 to-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-6 md:px-8 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
           <div>
@@ -204,6 +292,32 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <h2 className="font-display text-3xl font-bold mb-6 text-slate-900">
+          Problemas que detectamos antes de comprar o alquilar una vivienda
+        </h2>
+
+        <p className="mb-8 text-slate-600 leading-7">
+          Muchas viviendas presentan problemas que no son visibles durante una visita rápida.
+          Una inspección técnica permite identificar riesgos y costos ocultos antes de tomar una
+          decisión importante como comprar o alquilar una propiedad.
+        </p>
+
+        <ul className="space-y-4 text-slate-700">
+          <li>• Humedad oculta en muros y cielorrasos</li>
+          <li>• Filtraciones en terrazas o cubiertas</li>
+          <li>• Instalaciones eléctricas con riesgo</li>
+          <li>• Desniveles en pisos o estructuras</li>
+          <li>• Pérdidas de gas o agua</li>
+          <li>• Fallas en aberturas o cerramientos</li>
+        </ul>
+
+        <p className="mt-8 text-slate-600 leading-7">
+          En Base Cero Inspecciones realizamos un diagnóstico técnico utilizando herramientas
+          profesionales como cámara termográfica, detector de fugas, medidor de humedad y nivel láser.
+        </p>
       </section>
 
       <section className="bg-slate-50 py-16 sm:py-20">
@@ -361,6 +475,23 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="bg-slate-50 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <h2 className="font-display text-3xl font-bold mb-10 text-slate-900">
+            Preguntas frecuentes
+          </h2>
+
+          <div className="space-y-8">
+            {faqItems.map((item) => (
+              <div key={item.question} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h3 className="text-lg font-semibold text-slate-900">{item.question}</h3>
+                <p className="mt-3 text-slate-600 leading-7">{item.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="border-y border-slate-200 bg-white py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 text-center sm:px-6 md:px-8 lg:flex-row lg:text-left">
           <div>
@@ -411,6 +542,79 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <footer className="border-t border-slate-200 bg-slate-950 text-slate-300">
+        <div className="mx-auto max-w-7xl px-5 py-12 sm:px-6 md:px-8">
+          <div className="grid gap-10 md:grid-cols-3">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-300">
+                Base Cero Inspecciones
+              </p>
+              <p className="mt-4 text-sm leading-7 text-slate-400">
+                Inspección preventiva de viviendas en Córdoba Capital y zonas aledañas.
+                Diagnóstico técnico profesional para comprar, alquilar, entregar o recibir
+                una propiedad con mayor seguridad.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-white">
+                Contacto
+              </h3>
+              <ul className="mt-4 space-y-3 text-sm text-slate-400">
+                <li>
+                  WhatsApp:{' '}
+                  <a
+                    href="https://wa.me/543512647360"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sky-300 hover:text-sky-200"
+                  >
+                    +54 351 2647360
+                  </a>
+                </li>
+                <li>
+                  Email:{' '}
+                  <a
+                    href="mailto:contacto@inspeccionesdeviviendas.com.ar"
+                    className="text-sky-300 hover:text-sky-200"
+                  >
+                    contacto@inspeccionesdeviviendas.com.ar
+                  </a>
+                </li>
+                <li>Córdoba Capital, Argentina</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-white">
+                Navegación
+              </h3>
+              <ul className="mt-4 space-y-3 text-sm text-slate-400">
+                <li>
+                  <a href="#solicitar" className="hover:text-white">
+                    Solicitar inspección
+                  </a>
+                </li>
+                <li>
+                  <a href="https://inspeccionesdeviviendas.com.ar" className="hover:text-white">
+                    Inicio
+                  </a>
+                </li>
+                <li>
+                  <a href="https://wa.me/543512647360" target="_blank" rel="noreferrer" className="hover:text-white">
+                    WhatsApp
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-10 border-t border-slate-800 pt-6 text-sm text-slate-500">
+            <p>© {new Date().getFullYear()} Base Cero Inspecciones. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
