@@ -1,117 +1,43 @@
-import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(req: Request) {
-  try {
-    const data = await req.json();
+export async function POST(request: Request) {
+  const data = await request.json();
 
-    const name = String(data.name || "");
-    const email = String(data.email || "");
-    const phone = String(data.phone || "");
-    const neighborhood = String(data.neighborhood || "");
-    const propertyType = String(data.propertyType || "");
-    const reason = String(data.reason || "");
-    const details = String(data.details || "");
+  const name = data.name || "No informado";
+  const email = data.email;
+  const phone = data.phone;
+  const neighborhood = data.neighborhood;
 
-    const contactEmail = process.env.CONTACT_EMAIL;
+  const contactEmail = process.env.CONTACT_EMAIL as string;
 
-    if (!contactEmail) {
-      console.error("CONTACT_EMAIL no está configurado");
-      return NextResponse.json(
-        { message: "Error de configuración del servidor." },
-        { status: 500 }
-      );
-    }
+  // mail que te llega a vos
+  await resend.emails.send({
+    from: "Base Cero Inspecciones <contacto@inspeccionesdeviviendas.com.ar>",
+    to: contactEmail,
+    subject: "Nueva solicitud de inspección",
+    html: `
+      <h2>Nueva solicitud de inspección</h2>
+      <p><strong>Nombre:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Teléfono:</strong> ${phone}</p>
+      <p><strong>Barrio del inmueble:</strong> ${neighborhood}</p>
+    `,
+  });
 
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY no está configurado");
-      return NextResponse.json(
-        { message: "Error de configuración del servidor." },
-        { status: 500 }
-      );
-    }
+  // mail de confirmación al cliente
+  await resend.emails.send({
+    from: "Base Cero Inspecciones <contacto@inspeccionesdeviviendas.com.ar>",
+    to: email,
+    subject: "Recibimos tu consulta",
+    html: `
+      <h2>Gracias por contactarte</h2>
+      <p>Recibimos tu solicitud de inspección de vivienda.</p>
+      <p>Nos comunicaremos con vos a la brevedad.</p>
+      <p>Base Cero Inspecciones</p>
+    `,
+  });
 
-    if (!name || !email || !phone || !neighborhood || !propertyType || !reason) {
-      return NextResponse.json(
-        { message: "Faltan campos obligatorios del formulario." },
-        { status: 400 }
-      );
-    }
-
-    await resend.emails.send({
-      from: "Base Cero Inspecciones <onboarding@resend.dev>",
-      to: contactEmail,
-      subject: "Nueva solicitud de inspección",
-      html: `
-        <h2>Nueva solicitud de inspección</h2>
-
-        <p><b>Nombre:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Teléfono:</b> ${phone}</p>
-        <p><b>Barrio o ubicación:</b> ${neighborhood}</p>
-        <p><b>Tipo de inmueble:</b> ${propertyType}</p>
-        <p><b>Motivo de la consulta:</b> ${reason}</p>
-        <p><b>Mensaje:</b> ${details || "No informado"}</p>
-      `,
-    });
-
-    await resend.emails.send({
-      from: "Base Cero Inspecciones <onboarding@resend.dev>",
-      to: email,
-      subject: "Recibimos tu solicitud de inspección",
-      html: `
-        <h2>Gracias por tu consulta</h2>
-
-        <p>Hola ${name},</p>
-
-        <p>
-          Recibimos tu solicitud para realizar una inspección preventiva de vivienda.
-        </p>
-
-        <p>
-          Estos son los datos que registramos:
-        </p>
-
-        <ul>
-          <li><b>Ubicación:</b> ${neighborhood}</li>
-          <li><b>Tipo de inmueble:</b> ${propertyType}</li>
-          <li><b>Motivo:</b> ${reason}</li>
-        </ul>
-
-        <p>
-          En breve nos estaremos comunicando para coordinar la visita.
-        </p>
-
-        <p>
-          El informe técnico incluye:
-        </p>
-
-        <ul>
-          <li>Registro fotográfico</li>
-          <li>Hallazgos por ambiente</li>
-          <li>Observaciones prioritarias</li>
-          <li>Conclusión general</li>
-        </ul>
-
-        <p>
-          Saludos,<br />
-          <b>Base Cero Inspecciones</b><br />
-          Córdoba Capital
-        </p>
-      `,
-    });
-
-    return NextResponse.json({
-      message: "Solicitud enviada correctamente",
-    });
-  } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      { message: "Error al enviar el formulario." },
-      { status: 500 }
-    );
-  }
+  return Response.json({ success: true });
 }
