@@ -7,10 +7,13 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    const name = data.name;
-    const email = data.email;
-    const phone = data.phone;
-    const neighborhood = data.neighborhood;
+    const name = String(data.name || "");
+    const email = String(data.email || "");
+    const phone = String(data.phone || "");
+    const neighborhood = String(data.neighborhood || "");
+    const propertyType = String(data.propertyType || "");
+    const reason = String(data.reason || "");
+    const details = String(data.details || "");
 
     const contactEmail = process.env.CONTACT_EMAIL;
 
@@ -30,7 +33,13 @@ export async function POST(req: Request) {
       );
     }
 
-    // MAIL PARA USTEDES
+    if (!name || !email || !phone || !neighborhood || !propertyType || !reason) {
+      return NextResponse.json(
+        { message: "Faltan campos obligatorios del formulario." },
+        { status: 400 }
+      );
+    }
+
     await resend.emails.send({
       from: "Base Cero Inspecciones <onboarding@resend.dev>",
       to: contactEmail,
@@ -41,11 +50,13 @@ export async function POST(req: Request) {
         <p><b>Nombre:</b> ${name}</p>
         <p><b>Email:</b> ${email}</p>
         <p><b>Teléfono:</b> ${phone}</p>
-        <p><b>Barrio del inmueble:</b> ${neighborhood}</p>
+        <p><b>Barrio o ubicación:</b> ${neighborhood}</p>
+        <p><b>Tipo de inmueble:</b> ${propertyType}</p>
+        <p><b>Motivo de la consulta:</b> ${reason}</p>
+        <p><b>Mensaje:</b> ${details || "No informado"}</p>
       `,
     });
 
-    // MAIL AUTOMÁTICO AL CLIENTE
     await resend.emails.send({
       from: "Base Cero Inspecciones <onboarding@resend.dev>",
       to: email,
@@ -56,15 +67,25 @@ export async function POST(req: Request) {
         <p>Hola ${name},</p>
 
         <p>
-        Recibimos tu solicitud para realizar una inspección preventiva de vivienda.
+          Recibimos tu solicitud para realizar una inspección preventiva de vivienda.
         </p>
 
         <p>
-        En breve nos estaremos comunicando para coordinar la visita.
+          Estos son los datos que registramos:
+        </p>
+
+        <ul>
+          <li><b>Ubicación:</b> ${neighborhood}</li>
+          <li><b>Tipo de inmueble:</b> ${propertyType}</li>
+          <li><b>Motivo:</b> ${reason}</li>
+        </ul>
+
+        <p>
+          En breve nos estaremos comunicando para coordinar la visita.
         </p>
 
         <p>
-        El informe técnico incluye:
+          El informe técnico incluye:
         </p>
 
         <ul>
@@ -75,13 +96,9 @@ export async function POST(req: Request) {
         </ul>
 
         <p>
-        Si querés coordinar más rápido también podés escribirnos por WhatsApp.
-        </p>
-
-        <p>
-        Saludos,<br/>
-        <b>Base Cero Inspecciones</b><br/>
-        Córdoba Capital
+          Saludos,<br />
+          <b>Base Cero Inspecciones</b><br />
+          Córdoba Capital
         </p>
       `,
     });
