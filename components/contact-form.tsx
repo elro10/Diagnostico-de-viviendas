@@ -1,165 +1,107 @@
-'use client';
+"use client";
 
-import { FormEvent, useState } from 'react';
-
-type Status = 'idle' | 'loading' | 'success' | 'error';
+import { FormEvent, useState } from "react";
 
 export function ContactForm() {
-  const [status, setStatus] = useState<Status>('idle');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus('loading');
-    setMessage('');
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
 
-    const form = event.currentTarget;
+    const form = e.currentTarget;
     const formData = new FormData(form);
 
+    const name = String(formData.get("name") || "");
+    const phone = String(formData.get("phone") || "");
+    const email = String(formData.get("email") || "");
+    const neighborhood = String(formData.get("neighborhood") || "");
+
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: formData.get('fullName'),
-          phone: formData.get('phone'),
-          email: formData.get('email'),
-          neighborhood: formData.get('neighborhood'),
-          propertyType: formData.get('propertyType'),
-          reason: formData.get('reason'),
-          details: formData.get('details'),
+          name,
+          email,
+          phone,
+          neighborhood,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data?.message || 'No se pudo enviar la solicitud.');
+        throw new Error(data.message || "No se pudo enviar el formulario.");
       }
 
-      setStatus('success');
-      setMessage('Solicitud enviada correctamente. Te contactaremos a la brevedad.');
+      setMessage("Solicitud enviada correctamente.");
       form.reset();
+
+      const whatsappText =
+        `Hola, soy ${name}. Ya envié el formulario en la web de Base Cero Inspecciones.` +
+        `\nMi teléfono: ${phone}` +
+        `\nMi email: ${email}` +
+        `\nUbicación del inmueble: ${neighborhood}` +
+        `\nQuedo atento para coordinar la inspección.`;
+
+      const whatsappUrl = `https://wa.me/543512647360?text=${encodeURIComponent(whatsappText)}`;
+
+      window.open(whatsappUrl, "_blank");
     } catch (error) {
-      setStatus('error');
       setMessage(
-        error instanceof Error ? error.message : 'Ocurrió un error al enviar la solicitud.'
+        error instanceof Error
+          ? error.message
+          : "Ocurrió un error al enviar el formulario."
       );
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <form className="space-y-5" onSubmit={handleSubmit}>
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Nombre y apellido</label>
-        <input
-          name="fullName"
-          type="text"
-          required
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          placeholder="Tu nombre"
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <input
+        name="name"
+        placeholder="Nombre y apellido"
+        required
+        className="w-full border px-4 py-3 rounded-xl"
+      />
 
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Teléfono</label>
-        <input
-          name="phone"
-          type="tel"
-          required
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          placeholder="Tu número"
-        />
-      </div>
+      <input
+        name="phone"
+        placeholder="Teléfono"
+        required
+        className="w-full border px-4 py-3 rounded-xl"
+      />
 
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Correo electrónico</label>
-        <input
-          name="email"
-          type="email"
-          required
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          placeholder="tunombre@email.com"
-        />
-      </div>
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        required
+        className="w-full border px-4 py-3 rounded-xl"
+      />
 
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Barrio o ubicación del inmueble</label>
-        <input
-          name="neighborhood"
-          type="text"
-          required
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          placeholder="Ej. General Paz, Nueva Córdoba, Villa Belgrano"
-        />
-      </div>
-
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Tipo de inmueble</label>
-        <select
-          name="propertyType"
-          required
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Seleccionar
-          </option>
-          <option>Casa</option>
-          <option>Departamento</option>
-          <option>Dúplex</option>
-          <option>Otro</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Motivo de la consulta</label>
-        <select
-          name="reason"
-          required
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Seleccionar
-          </option>
-          <option>Compra</option>
-          <option>Alquiler</option>
-          <option>Cierre de contrato</option>
-          <option>Venta</option>
-          <option>Consulta general</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="mb-2 block text-sm font-medium text-slate-700">Mensaje</label>
-        <textarea
-          name="details"
-          rows={4}
-          className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
-          placeholder="Contanos ubicación, tipo de inmueble y qué querés revisar"
-        />
-      </div>
+      <input
+        name="neighborhood"
+        placeholder="Barrio o ubicación del inmueble"
+        className="w-full border px-4 py-3 rounded-xl"
+      />
 
       <button
         type="submit"
-        disabled={status === 'loading'}
-        className="w-full rounded-2xl bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-70"
+        disabled={loading}
+        className="bg-sky-600 text-white px-6 py-3 rounded-xl w-full font-semibold disabled:opacity-70"
       >
-        {status === 'loading' ? 'Enviando...' : 'Enviar solicitud'}
+        {loading ? "Enviando..." : "Enviar solicitud"}
       </button>
 
-      {message ? (
-        <p
-          className={`text-sm ${
-            status === 'success' ? 'text-emerald-600' : status === 'error' ? 'text-red-600' : 'text-slate-600'
-          }`}
-        >
-          {message}
-        </p>
-      ) : null}
+      {message && <p className="text-sm">{message}</p>}
     </form>
   );
 }
