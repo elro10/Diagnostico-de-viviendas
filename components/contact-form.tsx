@@ -61,7 +61,7 @@ export function ContactForm() {
         <input
           name="name"
           type="text"
-          placeholder="Tu nombre"
+          placeholder="Tu nombre y apellido"
           required
           className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500"
         />
@@ -108,7 +108,7 @@ export function ContactForm() {
 
       <div>
         <label className="mb-2 block text-sm font-medium text-slate-700">
-          Tipo de inmueble
+          Tipo de vivienda
         </label>
         <select
           name="propertyType"
