@@ -25,13 +25,8 @@ const services = [
   'Observaciones constructivas y funcionales',
 ];
 
-const tools = [
-  'Nivel láser',
-  'Detector de fugas de gas',
-  'Cámara termográfica',
-  'Distanciómetro',
-  'Probador de enchufes y disyuntores',
-];
+// Array vacío porque todas las herramientas ya tienen su imagen en la grilla
+const tools: string[] = [];
 
 const deliverables = [
   'Informe en PDF',
@@ -50,7 +45,7 @@ const audiences = [
 ];
 
 const team = [
-  { name: 'Arq. Ignacio Casas', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778803312/imagen_2026-05-14_210145014_vrfs0n.png' },
+  { name: 'Arq. Ignacio Casas', img: null },
   { name: 'Ing. Federico Fada Py', img: null },
   { name: 'MMO. Rodrigo Orellano', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778803960/IMG_20191004_141948_1_xurcts.jpg' }
 ];
@@ -499,17 +494,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* El resto de herramientas en etiquetas */}
-              <div className="mt-6 flex flex-wrap gap-3">
-                {tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
+              {/* Ya no mostramos etiquetas de texto porque todas las herramientas tienen imagen */}
             </div>
 
             <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
