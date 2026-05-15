@@ -45,7 +45,7 @@ const audiences = [
 ];
 
 const team = [
-  { name: 'Arq. Ignacio Casas', img: null },
+  { name: 'Arq. Ignacio Casas', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778869917/a4021668-fbbc-4492-b04d-0f9b21b5c19c_ehbrya.jpg' },
   { name: 'Ing. Federico Fada Py', img: null },
   { name: 'MMO. Rodrigo Orellano', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778803960/IMG_20191004_141948_1_xurcts.jpg' }
 ];
