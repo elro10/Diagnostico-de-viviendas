@@ -26,13 +26,11 @@ const services = [
 ];
 
 const tools = [
-  'Medidor de humedad',
   'Nivel láser',
   'Detector de fugas de gas',
   'Cámara termográfica',
   'Distanciómetro',
-  'Probador de enchufes',
-  'Inspección visual profesional',
+  'Probador de enchufes y disyuntores',
 ];
 
 const deliverables = [
@@ -52,7 +50,7 @@ const audiences = [
 ];
 
 const team = [
-  { name: 'Arq. Ignacio Casas', img: null},
+  { name: 'Arq. Ignacio Casas', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778803312/imagen_2026-05-14_210145014_vrfs0n.png' },
   { name: 'Ing. Federico Fada Py', img: null },
   { name: 'MMO. Rodrigo Orellano', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778803960/IMG_20191004_141948_1_xurcts.jpg' }
 ];
@@ -384,7 +382,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* Herramientas y Entrega (con imagen termográfica) */}
+      {/* Herramientas y Entrega (con todas las herramientas actualizadas) */}
       <section className="bg-slate-50 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 md:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
@@ -428,6 +426,76 @@ export default function HomePage() {
                     />
                   </div>
                   <p className="mt-3 text-center text-sm font-medium text-slate-700">Detector de materiales</p>
+                </div>
+
+                {/* Nivel láser */}
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="relative h-32 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778805443/imagen_2026-05-14_213723244_zjvzug.png"
+                      alt="Nivel láser"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <p className="mt-3 text-center text-sm font-medium text-slate-700">Nivel láser</p>
+                </div>
+
+                {/* Detector de fugas de gas */}
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="relative h-32 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778805583/imagen_2026-05-14_213944961_jaoisv.png"
+                      alt="Detector de fugas de gas"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <p className="mt-3 text-center text-sm font-medium text-slate-700">Detector de fugas de gas</p>
+                </div>
+
+                {/* Cámara termográfica */}
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="relative h-32 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778805642/WhatsApp_Image_2026-05-14_at_20.13.41_1_pculsz.jpg"
+                      alt="Cámara termográfica"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <p className="mt-3 text-center text-sm font-medium text-slate-700">Cámara termográfica</p>
+                </div>
+
+                {/* Distanciómetro láser */}
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="relative h-32 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778805769/imagen_2026-05-14_214250677_yc3dgc.png"
+                      alt="Distanciómetro láser"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <p className="mt-3 text-center text-sm font-medium text-slate-700">Distanciómetro láser</p>
+                </div>
+
+                {/* Probador de enchufes y disyuntores */}
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="relative h-32 w-full overflow-hidden rounded-xl">
+                    <Image
+                      src="https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778805853/8c6e5671-e719-46ea-93b2-c5576dbf5c5a.png"
+                      alt="Probador de enchufes y disyuntores"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <p className="mt-3 text-center text-sm font-medium text-slate-700">Probador de enchufes y disyuntores</p>
                 </div>
               </div>
 
