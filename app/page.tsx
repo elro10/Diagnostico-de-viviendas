@@ -46,7 +46,7 @@ const audiences = [
 
 const team = [
   { name: 'Arq. Ignacio Casas', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778869917/a4021668-fbbc-4492-b04d-0f9b21b5c19c_ehbrya.jpg' },
-  { name: 'Ing. Federico Fada Py', img: null },
+  { name: 'Ing. Federico Fada Py', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778871552/a08fa090-8d7c-4ef5-9c92-390fbab0089d.png' },
   { name: 'MMO. Rodrigo Orellano', img: 'https://res.cloudinary.com/dgfp1qcnq/image/upload/v1778803960/IMG_20191004_141948_1_xurcts.jpg' }
 ];
 
@@ -187,7 +187,7 @@ export default function HomePage() {
                 Solicitar inspección
               </a>
               <a
-                href="https://wa.me/543512647360"
+                href="https://wa.me/543517723435"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50"
@@ -203,7 +203,7 @@ export default function HomePage() {
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <p className="text-sm font-semibold text-slate-900">WhatsApp</p>
-                <p className="mt-1 text-sm text-slate-600">+54 351 2647360</p>
+                <p className="mt-1 text-sm text-slate-600">+54 351 7723435</p>
               </div>
             </div>
           </div>
@@ -738,12 +738,12 @@ export default function HomePage() {
                 <div className="mt-8 rounded-3xl border border-slate-800 bg-slate-950/40 p-5">
                   <p className="text-sm font-semibold text-white">WhatsApp secundario</p>
                   <a
-                    href="https://wa.me/543512647360"
+                    href="https://wa.me/543517723435"
                     target="_blank"
                     rel="noreferrer"
                     className="mt-2 inline-block text-base font-medium text-sky-300 hover:text-sky-200"
                   >
-                    +54 351 2647360
+                    +54 351 7723435
                   </a>
                 </div>
               </div>
@@ -777,12 +777,12 @@ export default function HomePage() {
                 <li>
                   WhatsApp:{' '}
                   <a
-                    href="https://wa.me/543512647360"
+                    href="https://wa.me/543517723435"
                     target="_blank"
                     rel="noreferrer"
                     className="text-sky-300 hover:text-sky-200"
                   >
-                    +54 351 2647360
+                    +54 351 7723435
                   </a>
                 </li>
                 <li>
@@ -814,7 +814,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/543512647360"
+                    href="https://wa.me/543517723435"
                     target="_blank"
                     rel="noreferrer"
                     className="hover:text-white"
